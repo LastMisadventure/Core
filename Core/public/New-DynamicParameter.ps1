@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Short description
+Creates a new [System.Management.Automation.RuntimeDefinedParameter].
 
 .DESCRIPTION
-Long description
+Creates a new [System.Management.Automation.RuntimeDefinedParameter]. These can be used in a [System.Management.Automation.RuntimeDefinedParameterDictionary].
 
 .PARAMETER Name
 The name of the resulting parameter. This is what the consumer will specify on the commandline.
@@ -86,14 +86,11 @@ function New-DynamicParameter {
 
     begin {
 
-    } # end block 'begin'
+    }
 
     process {
 
-        $spTarget = $Name
-        $spOperation = 'Create a "[System.Management.Automation.RuntimeDefinedParameter]" object'
-
-        if ($PsCmdlet.ShouldProcess($spTarget, $spOperation)) {
+        if ($PsCmdlet.ShouldProcess($Name, 'Create a "[System.Management.Automation.RuntimeDefinedParameter]" object')) {
 
             try {
 
@@ -133,20 +130,20 @@ function New-DynamicParameter {
 
                 Write-Output $runtimeParameter
 
-            } # end outer try
+            }
 
             catch {
 
                 Write-Error -ErrorAction Stop -Exception $_.Exception
 
-            } # end outer catch
+            }
 
-        } # End 'ShouldProcess {}'.
+        }
 
-    } # end block 'process'.
+    }
 
     end {
 
-    } # end block 'end'.
+    }
 
-} # end function 'NewDynamicParameter'.
+}

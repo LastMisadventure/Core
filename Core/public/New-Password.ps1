@@ -46,7 +46,7 @@ function New-Password {
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [switch]
-        $AsSecureString
+        $OutSecureString
 
     )
 
@@ -60,14 +60,11 @@ function New-Password {
 
     process {
 
-        $spTarget = 'password'
-        $spOperation = 'create a new password'
-
-        if ($PsCmdlet.ShouldProcess($spTarget, $spOperation)) {
+        if ($PsCmdlet.ShouldProcess('password', 'create')) {
 
             Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Generating a password with a length of $($Length) and a special character count of $($MinimumSpecialCharacterCount). "
 
-            switch ($AsSecureString.IsPresent) {
+            switch ($OutSecureString.IsPresent) {
 
                 $True {
 

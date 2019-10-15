@@ -72,7 +72,7 @@
     FunctionsToExport = 'ConvertTo-ReadableSize',
     'Invoke-HostChoiceMenu', 'New-DynamicParameter',
     'New-DynamicParameterDictionary', 'New-HostChoiceOption',
-    'New-Password'
+    'New-Password', 'Update-ScriptModule'
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()

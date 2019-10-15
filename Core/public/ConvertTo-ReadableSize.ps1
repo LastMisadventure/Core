@@ -83,7 +83,8 @@ function ConvertTo-ReadableSize {
 
             Default {
 
-                Write-Warning "Could not convert value '$($Size)'."
+                $newSize = $Size
+
             }
 
         }

@@ -18,7 +18,23 @@ One or more choice ([System.Management.Automation.Host.ChoiceDescription]) objec
 Pressing 'enter' will send the default choice.
 
 .EXAMPLE
-An example
+
+    $splat = @{
+
+        Title                 = "A newer version of '$($Module.Name)' was found"
+
+        Message               = "You may forcibly import the new version of the module or restart the session."
+
+        Choice                = $choice_Reload, $choice_Restart, $choice_Continue
+
+        DefaultChoicePosition = 0
+
+        Verbose               = $false
+
+    }
+
+
+Invoke-HostChoiceMenu @splat
 
 .NOTES
 General notes
