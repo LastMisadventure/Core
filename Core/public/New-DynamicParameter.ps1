@@ -32,7 +32,7 @@ The type name of the resulting parameter.
 The name of the parameter set the resulting parameter will belong to.
 
 .EXAMPLE
-An example
+New-DynamicParameter -Name ProjectName -Mandatory -Position 4 -ValueFromPipeLineByPropertyName
 
 .NOTES
 General notes
