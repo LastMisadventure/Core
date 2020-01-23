@@ -1,5 +1,4 @@
 Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
 
 $Class = @(Get-ChildItem -File -Recurse -Filter *.ps1 -Path (Join-Path -Path $PSScriptRoot -ChildPath 'class') -ErrorAction SilentlyContinue)
 
@@ -13,11 +12,10 @@ foreach ($function in @($Class + $Public + $Private)) {
 
         . $function.Fullname
 
-    }
+    } catch {
 
-    catch {
-
-        Write-Error -ErrorAction Stop -Message "Failed to import function '$($function.fullname)': $_"
+        $PSCmdlet.ThrowTerminatingError($PSItem)
 
     }
+
 }

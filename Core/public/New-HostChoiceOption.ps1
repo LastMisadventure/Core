@@ -41,12 +41,6 @@ function New-HostChoiceOption {
 
     )
 
-    begin {
-
-        $ErrorActionPreference = 'Stop'
-
-    }
-
     process {
 
         $spTarget = $Label
@@ -54,16 +48,20 @@ function New-HostChoiceOption {
 
         if ($PsCmdlet.ShouldProcess($spTarget, $spOperation)) {
 
+            try {
 
-            $_labalWithHotKeyValue = ('&' + $Label)
+                $labelWithHotKeyOptions = ('&' + $Label)
 
-            Write-Output (New-Object -ErrorAction Stop -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList $_labalWithHotKeyValue, $HelpMessage)
+                Write-Output (New-Object -ErrorAction Stop -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList $labelWithHotKeyOptions, $HelpMessage)
+
+
+            } catch {
+
+                $PSCmdlet.ThrowTerminatingError($PSItem)
+
+            }
 
         }
-
-    }
-
-    end {
 
     }
 

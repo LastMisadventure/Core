@@ -36,64 +36,62 @@ function ConvertTo-ReadableSize {
 
     )
 
-    begin {
-
-        $ErrorActionPreference = 'Stop'
-
-    }
-
     process {
 
-        switch ($Size) {
+        try {
 
-            # Petabytes.
-            { $Size -gt 1PB } {
+            switch ($Size) {
 
-                $newSize = "$([math]::Round(($Size / 1PB), 4)) PB"
-                break
+                # Petabytes.
+                { $Size -gt 1PB } {
+
+                    $newSize = "$([math]::Round(($Size / 1PB), 4)) PB"
+                    break
+                }
+
+                # Terabytes.
+                { $Size -gt 1TB } {
+
+                    $newSize = "$([math]::Round(($Size / 1TB), 3)) TB"
+                    break
+                }
+
+                # Gigabytes.
+                { $Size -gt 1GB } {
+
+                    $newSize = "$([math]::Round(($Size / 1GB), 2)) GB"
+                    break
+                }
+
+                # Megabytes.
+                { $Size -gt 1MB } {
+
+                    $newSize = "$([math]::Round(($Size / 1MB), 2)) MB"
+                    break
+                }
+
+                # Kilobytes.
+                { $Size -gt 1KB } {
+
+                    $newSize = "$([math]::Round(($Size / 1KB), 2)) KB"
+                    break
+                }
+
+                Default {
+
+                    $newSize = $Size
+
+                }
+
             }
 
-            # Terabytes.
-            { $Size -gt 1TB } {
+            Write-Output $NewSize
 
-                $newSize = "$([math]::Round(($Size / 1TB), 3)) TB"
-                break
-            }
+        } catch {
 
-            # Gigabytes.
-            { $Size -gt 1GB } {
-
-                $newSize = "$([math]::Round(($Size / 1GB), 2)) GB"
-                break
-            }
-
-            # Megabytes.
-            { $Size -gt 1MB } {
-
-                $newSize = "$([math]::Round(($Size / 1MB), 2)) MB"
-                break
-            }
-
-            # Kilobytes.
-            { $Size -gt 1KB } {
-
-                $newSize = "$([math]::Round(($Size / 1KB), 2)) KB"
-                break
-            }
-
-            Default {
-
-                $newSize = $Size
-
-            }
+            $PSCmdlet.ThrowTerminatingError($PSItem)
 
         }
-
-        Write-Output $NewSize
-
-    }
-
-    end {
 
     }
 

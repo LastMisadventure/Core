@@ -76,33 +76,31 @@ function New-DynamicParameterDictionary {
 
     )
 
-    begin {
-
-        $ErrorActionPreference = 'Stop'
-
-    }
-
     process {
 
         $spOperation = 'Create a "[System.Management.Automation.RuntimeDefinedParameterDictionary]" object'
 
         if ($PsCmdlet.ShouldProcess($spOperation)) {
 
-            $runtimeParameterDictionary = New-Object -ErrorAction Stop -TypeName System.Management.Automation.RuntimeDefinedParameterDictionary
+            try {
 
-            $DynamicParameter | ForEach-Object {
+                $runtimeParameterDictionary = New-Object -ErrorAction Stop -TypeName System.Management.Automation.RuntimeDefinedParameterDictionary
 
-                $runtimeParameterDictionary.Add($_.Name, $_)
+                $DynamicParameter | ForEach-Object {
+
+                    $runtimeParameterDictionary.Add($_.Name, $_)
+
+                }
+
+                Write-Output $runtimeParameterDictionary
+
+            } catch {
+
+                $PSCmdlet.ThrowTerminatingError($PSItem)
 
             }
 
-            Write-Output $runtimeParameterDictionary
-
         }
-
-    }
-
-    end {
 
     }
 

@@ -1,4 +1,5 @@
 Get-Module -Name Core | Remove-Module -Force
+
 Import-Module -Name Core -Force
 
 InModuleScope -ModuleName Core {

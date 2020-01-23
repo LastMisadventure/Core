@@ -62,29 +62,34 @@ function New-Password {
 
         if ($PsCmdlet.ShouldProcess('password', 'create')) {
 
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Generating a password with a length of $($Length) and a special character count of $($MinimumSpecialCharacterCount). "
+            try {
 
-            switch ($OutSecureString.IsPresent) {
+                Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Generating a password with a length of $($Length) and a special character count of $($MinimumSpecialCharacterCount). "
 
-                $True {
+                switch ($OutSecureString.IsPresent) {
 
-                    Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Returning securestring password..."
+                    $True {
 
-                    Write-Output ([System.Web.Security.Membership]::GeneratePassword($Length, $MinimumSpecialCharacterCount) | ConvertTo-SecureString -AsPlainText -Force)
+                        Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Returning securestring password..."
+
+                        Write-Output ([System.Web.Security.Membership]::GeneratePassword($Length, $MinimumSpecialCharacterCount) | ConvertTo-SecureString -AsPlainText -Force)
+                    }
+
+                    $False {
+
+                        Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Returning clear-text string password..."
+
+                        Write-Output ([System.Web.Security.Membership]::GeneratePassword($Length, $MinimumSpecialCharacterCount))
+                    }
                 }
 
-                $False {
+            } catch {
 
-                    Write-Verbose "[$($MyInvocation.MyCommand.Name)]: Returning clear-text string password..."
+                $PSCmdlet.ThrowTerminatingError($PSItem)
 
-                    Write-Output ([System.Web.Security.Membership]::GeneratePassword($Length, $MinimumSpecialCharacterCount))
-                }
             }
+
         }
-
-    }
-
-    end {
 
     }
 

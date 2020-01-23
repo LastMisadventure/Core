@@ -65,19 +65,17 @@ function Invoke-HostChoiceMenu {
 
     )
 
-    begin {
-
-        $ErrorActionPreference = 'Stop'
-
-    }
-
     process {
 
-        Write-Output ($host.ui.PromptForChoice($Title, $Message, $Choice, $DefaultChoicePosition))
+        try {
 
-    }
+            Write-Output ($host.ui.PromptForChoice($Title, $Message, $Choice, $DefaultChoicePosition))
 
-    end {
+        } catch {
+
+            $PSCmdlet.ThrowTerminatingError($PSItem)
+
+        }
 
     }
 

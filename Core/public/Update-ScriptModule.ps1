@@ -41,39 +41,39 @@ function Update-ScriptModule {
 
     process {
 
-        Write-Verbose "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Checking if a new version of this module has been deployed..."
+        try {
 
-        $availableModule = Get-Module ($Module.Path.Replace('.psm1', '.psd1')) -ListAvailable -Verbose:$false
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Checking if a new version of this module has been deployed..."
 
-        if ($Module.Version -lt $availableModule.Version) {
+            $availableModule = Get-Module ($Module.Path.Replace('.psm1', '.psd1')) -ListAvailable -Verbose:$false
 
-            $choice_Restart = Core\New-HostChoiceOption -Label 'Halt' -HelpMessage "Halts execution of this command." -Verbose:$false
+            if ($Module.Version -lt $availableModule.Version) {
 
-            $choice_Reload = Core\New-HostChoiceOption -Label 'Reload' -HelpMessage "Reload out-dated module '$($Module.Name)'." -Verbose:$false
+                $choice_Restart = Core\New-HostChoiceOption -Label 'Halt' -HelpMessage "Halts execution of this command." -Verbose:$false
 
-            $choice_Continue = Core\New-HostChoiceOption -Label 'Continue' -HelpMessage "Continue with the outdated module." -Verbose:$false
+                $choice_Reload = Core\New-HostChoiceOption -Label 'Reload' -HelpMessage "Reload out-dated module '$($Module.Name)'." -Verbose:$false
 
-            $splat = @{
+                $choice_Continue = Core\New-HostChoiceOption -Label 'Continue' -HelpMessage "Continue with the outdated module." -Verbose:$false
 
-                Title                 = "A newer version of '$($Module.Name)' was found"
+                $splat = @{
 
-                Message               = "You may forcibly import the new version of the module or restart the session."
+                    Title                 = "A newer version of '$($Module.Name)' was found"
 
-                Choice                = $choice_Reload, $choice_Restart, $choice_Continue
+                    Message               = "You may forcibly import the new version of the module or restart the session."
 
-                DefaultChoicePosition = 0
+                    Choice                = $choice_Reload, $choice_Restart, $choice_Continue
 
-                Verbose               = $false
+                    DefaultChoicePosition = 0
 
-            }
+                    Verbose               = $false
 
-            $result = Core\Invoke-HostChoiceMenu @splat
+                }
 
-            switch ($result) {
+                $result = Core\Invoke-HostChoiceMenu @splat
 
-                0 {
+                switch ($result) {
 
-                    try {
+                    0 {
 
                         Write-Verbose "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Importing new module version..."
 
@@ -97,34 +97,33 @@ function Update-ScriptModule {
 
                     }
 
-                    catch {
+                    1 {
 
-                        Write-Error -ErrorAction Stop -Exception $_.Exception
+                        Write-Error -ErrorAction Stop -Message "Operator chose to halt operation."
+
                     }
 
-                }
+                    2 {
 
-                1 {
+                        Write-Warning "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Continuing with out-dated module."
 
-                    Write-Error -ErrorAction Stop -Message "Operator chose to halt operation."
+                        return
 
-                }
-
-                2 {
-
-                    Write-Warning "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Continuing with out-dated module."
-
-                    return
+                    }
 
                 }
 
             }
 
-        }
+            else {
 
-        else {
+                Write-Verbose "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Module is up-to-date."
+            }
 
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)]: [$($Module.Name)]: Module is up-to-date."
+        } catch {
+
+            $PSCmdlet.ThrowTerminatingError($PSItem)
+
         }
 
     }

@@ -84,10 +84,6 @@ function New-DynamicParameter {
 
     )
 
-    begin {
-
-    }
-
     process {
 
         if ($PsCmdlet.ShouldProcess($Name, 'Create a "[System.Management.Automation.RuntimeDefinedParameter]" object')) {
@@ -130,19 +126,13 @@ function New-DynamicParameter {
 
                 Write-Output $runtimeParameter
 
-            }
+            } catch {
 
-            catch {
-
-                Write-Error -ErrorAction Stop -Exception $_.Exception
+                $PSCmdlet.ThrowTerminatingError($PSItem)
 
             }
 
         }
-
-    }
-
-    end {
 
     }
 

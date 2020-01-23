@@ -1,4 +1,5 @@
 Get-Module -Name Core | Remove-Module -Force
+
 Import-Module -Name Core -Force
 
 InModuleScope -ModuleName Core {
@@ -15,7 +16,7 @@ InModuleScope -ModuleName Core {
 
         It 'Creates a [securestring] password.' {
 
-            $testResult = New-Password -Length 38 -MinimumSpecialCharacterCount 11 -AsSecureString
+            $testResult = New-Password -Length 38 -MinimumSpecialCharacterCount 11 -OutSecureString
 
             $testResult -is [securestring] | should be $true
 
