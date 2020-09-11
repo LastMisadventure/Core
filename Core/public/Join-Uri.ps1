@@ -18,7 +18,7 @@ $invocation = Join-URL -Url 'https://server.domain.com' -ChildPart "api/v1/docum
 General notes
 #>
 
-function Join-Url {
+function Join-Uri {
 
     [CmdletBinding(PositionalBinding, ConfirmImpact = 'low')]
 
@@ -27,7 +27,7 @@ function Join-Url {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, Position = 0)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Url,
+        $Uri,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, Position = 1)]
         [ValidateNotNullOrEmpty()]
@@ -38,7 +38,7 @@ function Join-Url {
 
     process {
 
-        Write-Output ([uri] ($Url.ToString() + "/" + $ChildPart.ToString()))
+        Write-Output ([uri] ($Uri.ToString() + '/' + $ChildPart.ToString()))
 
     }
 

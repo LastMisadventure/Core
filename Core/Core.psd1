@@ -60,7 +60,7 @@ CLRVersion = '4.0.30319.42000'
 # ScriptsToProcess = @()
 
 # Type files (.ps1xml) to be loaded when importing this module
-# TypesToProcess = @()
+TypesToProcess = @('Types.ps1xml')
 
 # Format files (.ps1xml) to be loaded when importing this module
 # FormatsToProcess = @()
@@ -69,8 +69,8 @@ CLRVersion = '4.0.30319.42000'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'ConvertTo-ReadableSize', 'Invoke-HostChoiceMenu', 'Join-Url', 
-               'New-DynamicParameter', 'New-DynamicParameterDictionary', 
+FunctionsToExport = 'ConvertTo-ReadableSize', 'Invoke-HostChoiceMenu', 'Join-Url',
+               'New-DynamicParameter', 'New-DynamicParameterDictionary',
                'New-HostChoiceOption', 'New-Password', 'Update-ScriptModule'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

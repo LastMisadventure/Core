@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>System.IO.FileSystemInfo</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Size</Name>
+        <GetScriptBlock>
+          ($this.Length | Core\ConvertTo-ReadableSize -Verbose:$false)
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+</Types>
